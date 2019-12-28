@@ -35,11 +35,14 @@ def export(torch_model, sample_inputs,
            verbose=True,
            **export_args):
     assert(len(_tuple(sample_inputs)) == len(_tuple(input_names)))
+    if dynamic_axes is not None:
+        assert(type(dynamic_axes) == dict)
+        assert(all([type(k) == str and type(v) == list for k, v in dynamic_axes.items()]))
 
     sample_inputs = _tuple(sample_inputs)
     input_names = _tuple(input_names)
     output_names = _tuple(output_names)
-
+    
     log('shapes of sample_inputs:', [_.shape for _ in sample_inputs], verbose=verbose)
     log('result_onnx_file:', result_onnx_file, verbose=verbose)
     log('input_names:', input_names, verbose=verbose)

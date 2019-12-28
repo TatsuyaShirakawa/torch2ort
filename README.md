@@ -39,7 +39,7 @@ $ PYTHONPATH=. python benchmark.py
 
 The following is the result on my environment.
 
-- MacBook Pro 2017
+- 2.5 GHz Dual-Core Intel Core i7
 - PyTorch 1.3.1
 - Torch 1.1.0
 
