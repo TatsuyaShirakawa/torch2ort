@@ -1,3 +1,4 @@
+import argparse
 from pathlib import Path
 import sys
 import traceback
@@ -10,9 +11,15 @@ import torch2ort
 from ortmodel import ORTModel
 
 
-n = 20
+parser = argparse.ArgumentParser()
+parser.add_argument('--cuda', action='store_true')
+parser.add_argument('--num_samples', default=20, type=int)
+parser.add_argument('--result_dir', default=Path('result'), type=Path)
+args = parser.parse_args()
 
-result_dir = Path('result')
+device = 'cuda' if args.cuda else 'cpu'
+n = args.num_samples
+result_dir = args.result_dir
 
 names = [_ for _ in dir(models) if not _.startswith('_') and not isinstance(getattr(models, _), ModuleType)]
 
@@ -24,6 +31,7 @@ def test(name):
     tic = time.time()
     model = getattr(models, name)()
     model.eval()
+    model.to(device)
     t = time.time() - tic
     result['pytorch loading'] = t
 
