@@ -39,7 +39,7 @@ $ PYTHONPATH=. python benchmark.py
 
 The following is the result on my environment.
 
-- 2.5 GHz Dual-Core Intel Core i7
+- product: Intel(R) Core(TM) i7-6800K CPU @ 3.40GHz
 - PyTorch 1.3.1
 - Torch 1.1.0
 

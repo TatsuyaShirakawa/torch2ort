@@ -39,8 +39,9 @@ def test(name):
     t = time.time() - tic
     result['pytorch loading'] = t
 
-    x_torch = torch.empty(1, 3, 224, 224).uniform_()
-    x_numpy = x_torch.numpy()
+    x_torch_cpu = torch.empty(1, 3, 224, 224).uniform_()
+    x_numpy = x_torch_cpu.numpy()
+    x_torch = x_torch_cpu.to(device)
 
     # export
     result_dir.mkdir(parents=True, exist_ok=True)
@@ -65,7 +66,7 @@ def test(name):
     tic = time.time()
     with torch.no_grad():
         for i in range(n):
-            y = model(x_torch)
+            y = model(x_torch.to(device))
     t = time.time() - tic
     result['pytorch inference'] = t
 
