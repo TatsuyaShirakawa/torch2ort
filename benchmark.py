@@ -15,13 +15,17 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--cuda', action='store_true')
 parser.add_argument('--num_samples', default=20, type=int)
 parser.add_argument('--result_dir', default=Path('result'), type=Path)
+parser.add_argument('--models', default=[], nargs='+')
 args = parser.parse_args()
 
 device = 'cuda' if args.cuda else 'cpu'
 n = args.num_samples
 result_dir = args.result_dir
 
-names = [_ for _ in dir(models) if not _.startswith('_') and not isinstance(getattr(models, _), ModuleType)]
+if args.models:
+    names = args.models
+else:
+    names = [_ for _ in dir(models) if not _.startswith('_') and not isinstance(getattr(models, _), ModuleType)]
 
 
 def test(name):
